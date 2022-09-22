@@ -6,7 +6,7 @@
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 03:11:32 by aradice           #+#    #+#             */
-/*   Updated: 2022/09/22 03:11:33 by aradice          ###   ########.fr       */
+/*   Updated: 2022/09/22 22:19:58 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,14 @@ typedef struct s_pipex
 	char	**paths;
 	char	*path;
 	char	*command_path;
+	int		pipefd[2];
 }				t_pipex;
 
-void	ft_error(char *error, int num_error);
+void	ft_error(char *error);
 char	**ft_free_all(char **tab);
 void	ft_open_files(t_pipex *data, char *infile, char *outfile);
-void	ft_child1(t_pipex *data, int *fd, char **argv, char **envp);
-void	ft_child2(t_pipex *data, int *fd, char **argv, char **envp);
+void	ft_child1(t_pipex *data, char **argv, char **envp);
+void	ft_child2(t_pipex *data, char **argv, char **envp);
 int		main(int argc, char **argv, char **envp);
 char	*ft_access(t_pipex *data);
 char	*ft_path(t_pipex *data, char **envp);
