@@ -9,6 +9,7 @@ SRCS_FILES_BONUS = 	pipex_bonus.c \
 					parsing_bonus.c \
 					childs_bonus.c \
 					childs_bonus.c \
+					here_doc_bonus.c \
 
 SRCS_PATH = src/
 SRCS_PATH_BONUS = bonus/

@@ -6,7 +6,7 @@
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 03:16:29 by aradice           #+#    #+#             */
-/*   Updated: 2022/09/23 23:01:44 by aradice          ###   ########.fr       */
+/*   Updated: 2022/09/26 17:33:10 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	ft_open_files(t_pipex *data, char *infile, char *outfile)
 		ft_error("Outfile Error");
 	else if (data->outfile == -1 && data->infile < 0)
 	{
-		close(data->infile);
-		close(data->outfile);
+		// close(data->infile);
+		// close(data->outfile);
 		ft_error("Infile and Outfile Error");
 
 	}
