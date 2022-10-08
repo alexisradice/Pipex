@@ -6,7 +6,7 @@
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 03:17:12 by aradice           #+#    #+#             */
-/*   Updated: 2022/10/05 20:33:48 by aradice          ###   ########.fr       */
+/*   Updated: 2022/10/08 20:10:50 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_childs(t_pipex *data, char **argv, char **envp)
 		else
 			data->command = ft_split(argv[2 + data->index_child], ' ');
 		if (execve(ft_path(data, envp), data->command, envp) == -1)
-			ft_error("Path or Commxand Error");
+			ft_error("Path or Command Error");
 	}
 	else
 	{

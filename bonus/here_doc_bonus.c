@@ -6,7 +6,7 @@
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 01:29:02 by aradice           #+#    #+#             */
-/*   Updated: 2022/10/06 06:31:47 by aradice          ###   ########.fr       */
+/*   Updated: 2022/10/08 18:22:29 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,6 @@ void	ft_here_doc(t_pipex *data)
 		free(line);
 		line = get_next_line(STDIN_FILENO);
 	}
+	if (unlink("temp.tmp") == -1)
+		ft_error("Temp File Error");
 }

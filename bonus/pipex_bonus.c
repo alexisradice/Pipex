@@ -6,12 +6,12 @@
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 03:16:29 by aradice           #+#    #+#             */
-/*   Updated: 2022/10/06 06:28:40 by aradice          ###   ########.fr       */
+/*   Updated: 2022/10/08 23:06:11 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
-
+#include <stdio.h>
 void	ft_error(char *error)
 {
 	perror(error);
@@ -43,20 +43,26 @@ void	ft_open_files(t_pipex *data, char *infile, char *outfile)
 	else
 	{		
 		data->infile = open(infile, O_RDONLY);
+		data->outfile = open(outfile, O_RDWR | O_CREAT | O_TRUNC, 0777);
+		if (data->outfile == -1 && data->infile == -1)
+		{
+			perror("Outfile Error");
+			ft_error("Infile Error");
+		}
 		if (data->infile == -1)
 			ft_error("Infile Error");
-		data->outfile = open(outfile, O_RDWR | O_CREAT | O_TRUNC, 0777);
 		if (data->outfile == -1)
 			ft_error("Outfile Error");
-		if (data->outfile == -1 && data->infile == -1)
-			ft_error("Infile and Outfile Error");
+
 	}
 }
 
 void ft_mode(t_pipex *data, int argc, char **argv)
 {
-	if (!ft_strncmp(argv[1], "here_doc", 8) && argc >= 6)
+	if (!ft_strncmp(argv[1], "here_doc", 8))
 	{
+		if (argc < 6)
+			ft_error("Arguments Error");
 		data->index_child = 0;
 		data->heredoc = 1;
 		data->limiter = argv[2];
@@ -76,7 +82,7 @@ void ft_mode(t_pipex *data, int argc, char **argv)
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	data;
-
+	
 	if (argc < 5)
 		ft_error("Arguments Error");
 	else
@@ -96,12 +102,7 @@ int	main(int argc, char **argv, char **envp)
 			(&data)->command = ft_split(argv[2 + (&data)->index_child], ' ');
 		if (execve(ft_path((&data), envp), (&data)->command, envp) == -1)
 			ft_error("Path or Command Error");
-		// ft_free_all((&data)->command);
-		// if (access("temp.tmp", X_OK) != -1)
-		// {
-		// 	if (unlink("temp.tmp") == 0)
-		// 		ft_error("Temp File Error");
-		// }
+		ft_free_all((&data)->command);
 		close((&data)->infile);
 		close((&data)->outfile);
 	}
