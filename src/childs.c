@@ -6,7 +6,7 @@
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 03:17:12 by aradice           #+#    #+#             */
-/*   Updated: 2022/09/23 22:49:11 by aradice          ###   ########.fr       */
+/*   Updated: 2022/10/08 23:06:33 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	ft_child1(t_pipex *data, char **argv, char **envp)
 		data->command = ft_split(argv[2], ' ');
 		if (execve(ft_path(data, envp), data->command, envp) == -1)
 			ft_error("Path or Command Error");
+		// exit(0);
 	}
 }
 
@@ -43,5 +44,6 @@ void	ft_child2(t_pipex *data, char **argv, char **envp)
 		close(data->pipefd[1]);
 		if (execve(ft_path(data, envp), data->command, envp) == -1)
 			ft_error("Path or Command Error");
+		// exit(0);
 	}
 }

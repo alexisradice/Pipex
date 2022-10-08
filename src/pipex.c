@@ -6,7 +6,7 @@
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 03:16:29 by aradice           #+#    #+#             */
-/*   Updated: 2022/09/26 17:33:10 by aradice          ###   ########.fr       */
+/*   Updated: 2022/10/08 23:06:45 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	main(int argc, char **argv, char **envp)
 		if (pipe((&data)->pipefd) == -1)
 			ft_error("Pipe Error");
 		ft_open_files(&data, argv[1], argv[argc - 1]);
+		(void)envp;
 		ft_child1(&data, argv, envp);
 		ft_child2(&data, argv, envp);
 		ft_free_all((&data)->command);
