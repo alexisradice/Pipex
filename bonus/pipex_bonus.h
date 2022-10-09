@@ -6,14 +6,14 @@
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 03:11:32 by aradice           #+#    #+#             */
-/*   Updated: 2022/10/08 21:16:20 by aradice          ###   ########.fr       */
+/*   Updated: 2022/10/09 20:16:06 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_BONUS_H
 # define PIPEX_BONUS_H
 
-# include "../libft/includes/libft.h"
+# include "libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <limits.h>

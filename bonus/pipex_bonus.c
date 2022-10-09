@@ -6,12 +6,12 @@
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 03:16:29 by aradice           #+#    #+#             */
-/*   Updated: 2022/10/08 23:06:11 by aradice          ###   ########.fr       */
+/*   Updated: 2022/10/09 20:36:00 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
-#include <stdio.h>
+
 void	ft_error(char *error)
 {
 	perror(error);
@@ -89,20 +89,15 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_mode((&data), argc, argv);
 		dup2((&data)->infile, STDIN_FILENO);
-		dup2((&data)->outfile, STDOUT_FILENO);
-		while ((&data)->index_child < ((&data)->commands) - 1)
+		while ((&data)->index_child <= ((&data)->commands) - 1)
 		{
 			ft_childs(&data, argv, envp);
 			(&data)->index_child++;
 		}
-		dup2((&data)->outfile, STDOUT_FILENO);
-		if ((&data)->heredoc == 1)
-			(&data)->command = ft_split(argv[3 + (&data)->index_child], ' ');
-		else
-			(&data)->command = ft_split(argv[2 + (&data)->index_child], ' ');
-		if (execve(ft_path((&data), envp), (&data)->command, envp) == -1)
-			ft_error("Path or Command Error");
-		ft_free_all((&data)->command);
+		// while(wait(&(&data)->pid) > 0)
+		// waitpid((&data)->pid, NULL, 0);
+		while(wait(&(&data)->pid) > 0)
+			continue ;
 		close((&data)->infile);
 		close((&data)->outfile);
 	}

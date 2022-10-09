@@ -6,7 +6,7 @@
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 03:17:12 by aradice           #+#    #+#             */
-/*   Updated: 2022/10/08 20:10:50 by aradice          ###   ########.fr       */
+/*   Updated: 2022/10/09 20:29:52 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ void	ft_childs(t_pipex *data, char **argv, char **envp)
 	if (data->pid == 0)
 	{
 		close(data->pipefd[0]);
-		dup2(data->pipefd[1], STDOUT_FILENO);
+		if (data->index_child == data->commands - 1)
+			dup2(data->outfile, STDOUT_FILENO);
+		else
+			dup2(data->pipefd[1], STDOUT_FILENO);
+		close(data->pipefd[1]);
 		if (data->heredoc == 1)
 			data->command = ft_split(argv[3 + data->index_child], ' ');
 		else
@@ -30,10 +34,7 @@ void	ft_childs(t_pipex *data, char **argv, char **envp)
 		if (execve(ft_path(data, envp), data->command, envp) == -1)
 			ft_error("Path or Command Error");
 	}
-	else
-	{
-		close(data->pipefd[1]);
-		dup2(data->pipefd[0], STDIN_FILENO);
-		waitpid(data->pid, NULL, 0);
-	}
+	close(data->pipefd[1]);
+	dup2(data->pipefd[0], STDIN_FILENO);
+	close(data->pipefd[0]);
 }
