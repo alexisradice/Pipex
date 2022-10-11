@@ -41,12 +41,7 @@ void	ft_open_files(t_pipex *data, char *infile, char *outfile)
 	else if (data->outfile == -1 && data->infile >= 0)
 		ft_error("Outfile Error");
 	else if (data->outfile == -1 && data->infile < 0)
-	{
-		// close(data->infile);
-		// close(data->outfile);
 		ft_error("Infile and Outfile Error");
-
-	}
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -60,7 +55,6 @@ int	main(int argc, char **argv, char **envp)
 		if (pipe((&data)->pipefd) == -1)
 			ft_error("Pipe Error");
 		ft_open_files(&data, argv[1], argv[argc - 1]);
-		(void)envp;
 		ft_child1(&data, argv, envp);
 		ft_child2(&data, argv, envp);
 		ft_free_all((&data)->command);

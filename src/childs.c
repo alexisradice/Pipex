@@ -26,7 +26,6 @@ void	ft_child1(t_pipex *data, char **argv, char **envp)
 		data->command = ft_split(argv[2], ' ');
 		if (execve(ft_path(data, envp), data->command, envp) == -1)
 			ft_error("Path or Command Error");
-		// exit(0);
 	}
 }
 
@@ -42,8 +41,9 @@ void	ft_child2(t_pipex *data, char **argv, char **envp)
 		dup2(data->outfile, STDOUT_FILENO);
 		close(data->pipefd[0]);
 		close(data->pipefd[1]);
-		if (execve(ft_path(data, envp), data->command, envp) == -1)
-			ft_error("Path or Command Error");
-		// exit(0);
+		if (data->command == NULL)
+		{
+			exit(1);
+		}
 	}
 }
