@@ -6,7 +6,7 @@
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 03:16:29 by aradice           #+#    #+#             */
-/*   Updated: 2022/10/09 20:36:00 by aradice          ###   ########.fr       */
+/*   Updated: 2022/10/12 00:54:28 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,10 @@ void	ft_open_files(t_pipex *data, char *infile, char *outfile)
 			ft_error("Infile Error");
 		if (data->outfile == -1)
 			ft_error("Outfile Error");
-
 	}
 }
 
-void ft_mode(t_pipex *data, int argc, char **argv)
+void	ft_mode(t_pipex *data, int argc, char **argv)
 {
 	if (!ft_strncmp(argv[1], "here_doc", 8))
 	{
@@ -68,8 +67,10 @@ void ft_mode(t_pipex *data, int argc, char **argv)
 		data->limiter = argv[2];
 		data->commands = argc - 4;
 		ft_open_files(data, argv[3], argv[argc - 1]);
+		if (unlink("temp.tmp") == -1)
+			ft_error("Temp File Error");
 	}
-	else 
+	else
 	{
 		data->index_child = 0;
 		data->heredoc = 0;
@@ -82,39 +83,24 @@ void ft_mode(t_pipex *data, int argc, char **argv)
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	data;
-	
-	// (void)envp;
-	// (void)data;
-	// (void)argv;
-
-	(&data)->command = ft_split(argv[3], ' ');
-	// printf("%s", (&data)->command[2]);
-	ft_path((&data), envp);
-	// printf("%s", (&data)->command_path);
-	// execve((&data)->command_path, (&data)->command, envp);
-	
-	ft_free_all((&data)->command);
-	// free((&data)->command_path);
-	// execve((&data)->correct_path, (&data)->command, envp);
 
 	if (argc < 5)
 		ft_error("Arguments Error");
 	else
 	{
-		// ft_mode((&data), argc, argv);
-		// dup2((&data)->infile, STDIN_FILENO);
-		// while ((&data)->index_child <= ((&data)->commands) - 1)
-		// {
-		// 	ft_childs(&data, argv, envp);
-		// 	(&data)->index_child++;
-		// }
-		// while(wait(&(&data)->pid) > 0)
-		// waitpid((&data)->pid, NULL, 0);
-		// while(wait(&(&data)->pid) > 0)
-		// 	continue ;
-		// close((&data)->infile);
-		// close((&data)->outfile);
+		ft_mode((&data), argc, argv);
+		dup2((&data)->infile, STDIN_FILENO);
+		while ((&data)->index_child <= ((&data)->commands) - 1)
+		{
+			ft_childs(&data, argv, envp);
+			(&data)->index_child++;
+		}
+		while (wait(&(&data)->pid) > 0)
+		{
+			continue ;
+		}
+		close((&data)->infile);
+		close((&data)->outfile);
 	}
 	return (0);
 }
-

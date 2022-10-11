@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/22 03:11:32 by aradice           #+#    #+#             */
-/*   Updated: 2022/10/09 20:16:06 by aradice          ###   ########.fr       */
+/*   Created: 2022/10/11 20:18:56 by aradice           #+#    #+#             */
+/*   Updated: 2022/10/12 01:20:49 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ typedef struct s_pipex
 	int		pipefd[2];
 	int		index_child;
 	int		heredoc;
-	char 	*limiter;
+	char	*limiter;
 	int		commands;
+	char	*correct_path;
 }				t_pipex;
 
 void	ft_error(char *error);
@@ -40,9 +41,11 @@ void	ft_free_all(char **tab);
 void	ft_open_files(t_pipex *data, char *infile, char *outfile);
 void	ft_childs(t_pipex *data, char **argv, char **envp);
 int		main(int argc, char **argv, char **envp);
-void	ft_access(t_pipex *data);
-void	ft_path(t_pipex *data, char **envp);
+char	*ft_access(t_pipex *data);
+char	*ft_path(t_pipex *data, char **envp);
 void	ft_mode(t_pipex *data, int argc, char **argv);
 void	ft_here_doc(t_pipex *data);
+void	ft_free_paths(t_pipex *data);
+void	ft_exec_init(t_pipex *data, char **argv, char **envp);
 
 #endif
