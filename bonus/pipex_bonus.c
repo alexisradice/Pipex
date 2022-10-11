@@ -83,23 +83,38 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	data;
 	
+	// (void)envp;
+	// (void)data;
+	// (void)argv;
+
+	(&data)->command = ft_split(argv[3], ' ');
+	// printf("%s", (&data)->command[2]);
+	ft_path((&data), envp);
+	// printf("%s", (&data)->command_path);
+	// execve((&data)->command_path, (&data)->command, envp);
+	
+	ft_free_all((&data)->command);
+	// free((&data)->command_path);
+	// execve((&data)->correct_path, (&data)->command, envp);
+
 	if (argc < 5)
 		ft_error("Arguments Error");
 	else
 	{
-		ft_mode((&data), argc, argv);
-		dup2((&data)->infile, STDIN_FILENO);
-		while ((&data)->index_child <= ((&data)->commands) - 1)
-		{
-			ft_childs(&data, argv, envp);
-			(&data)->index_child++;
-		}
+		// ft_mode((&data), argc, argv);
+		// dup2((&data)->infile, STDIN_FILENO);
+		// while ((&data)->index_child <= ((&data)->commands) - 1)
+		// {
+		// 	ft_childs(&data, argv, envp);
+		// 	(&data)->index_child++;
+		// }
 		// while(wait(&(&data)->pid) > 0)
 		// waitpid((&data)->pid, NULL, 0);
-		while(wait(&(&data)->pid) > 0)
-			continue ;
-		close((&data)->infile);
-		close((&data)->outfile);
+		// while(wait(&(&data)->pid) > 0)
+		// 	continue ;
+		// close((&data)->infile);
+		// close((&data)->outfile);
 	}
 	return (0);
 }
+

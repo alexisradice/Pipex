@@ -14,27 +14,31 @@
 
 void	ft_childs(t_pipex *data, char **argv, char **envp)
 {
-	if (pipe(data->pipefd) == -1)
-		ft_error("Pipe Error");
-	data->pid = fork();
-	if (data->pid == -1)
-		ft_error("Fork Error");
-	if (data->pid == 0)
-	{
-		close(data->pipefd[0]);
-		if (data->index_child == data->commands - 1)
-			dup2(data->outfile, STDOUT_FILENO);
-		else
-			dup2(data->pipefd[1], STDOUT_FILENO);
-		close(data->pipefd[1]);
-		if (data->heredoc == 1)
-			data->command = ft_split(argv[3 + data->index_child], ' ');
-		else
-			data->command = ft_split(argv[2 + data->index_child], ' ');
-		if (execve(ft_path(data, envp), data->command, envp) == -1)
-			ft_error("Path or Command Error");
-	}
-	close(data->pipefd[1]);
-	dup2(data->pipefd[0], STDIN_FILENO);
-	close(data->pipefd[0]);
+	(void)envp;
+	(void)data;
+	(void)argv;
+	// if (pipe(data->pipefd) == -1)
+	// 	ft_error("Pipe Error");
+	// data->pid = fork();
+	// if (data->pid == -1)
+	// 	ft_error("Fork Error");
+	// if (data->pid == 0)
+	// {
+	// 	close(data->pipefd[0]);
+	// 	if (data->index_child == data->commands - 1)
+	// 		dup2(data->outfile, STDOUT_FILENO);
+	// 	else
+	// 		dup2(data->pipefd[1], STDOUT_FILENO);
+	// 	close(data->pipefd[1]);
+		// data->correct_path = ft_path(data, envp);
+		// if (data->heredoc == 1)
+		// 	data->command = ft_split(argv[3 + data->index_child], ' ');
+		// else
+		// 	data->command = ft_split(argv[2 + data->index_child], ' ');
+		// if (execve(data->correct_path, data->command, envp) == -1)
+		// 	ft_error("Path or Command Error");
+	// }
+	// close(data->pipefd[1]);
+	// dup2(data->pipefd[0], STDIN_FILENO);
+	// close(data->pipefd[0]);
 }

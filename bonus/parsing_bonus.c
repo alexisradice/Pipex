@@ -12,38 +12,46 @@
 
 #include "pipex_bonus.h"
 
-char	*ft_access(t_pipex *data)
+void	ft_access(t_pipex *data)
 {
 	int		i;
 	char	*temp;
+	char	*temp2;
 
 	i = 0;
-	if (access(data->command[0], F_OK | X_OK) == 0)
-		return (data->command[0]);
+	// if (access(data->command[0], F_OK | X_OK) == 0)
+	// 	return (data->command[0]);
+	// while (data->paths[i])
+	// {
+	// 	// temp = data->paths[i];
+	// 	// free(data->paths[i]);
+	// 	data->paths[i] = ft_strjoin(data->paths[i], "/");
+	// 	// free(temp);
+	// 	i++;
+	// }
+	// i = 0;
 	while (data->paths[i])
 	{
-		temp = data->paths[i];
-		data->paths[i] = ft_strjoin(data->paths[i], "/");
+		// printf("%s", data->command[0]);
+		temp = ft_strjoin(data->paths[i], "/");
+		// temp = data->paths[i];
+		temp2 = ft_strjoin(temp, data->command[0]);
 		free(temp);
-		i++;
-	}
-	i = 0;
-	while (data->paths[i])
-	{
-		data->command_path = ft_strjoin(data->paths[i], data->command[0]);
-		if (access(data->command_path, F_OK | X_OK) == 0)
+		if (access(temp2, F_OK | X_OK) == 0)
 		{
 			ft_free_all(data->paths);
-			return (data->command_path);
+			data->command_path = temp2;
+			free(temp2);
+			printf("%s", data->command_path);
+			return ;
 		}
-		free(data->command_path);
+		free(temp2);
 		i++;
 	}
 	ft_free_all(data->paths);
-	return (NULL);
 }
 
-char	*ft_path(t_pipex *data, char **envp)
+void	ft_path(t_pipex *data, char **envp)
 {
 	int		i;
 
@@ -59,7 +67,8 @@ char	*ft_path(t_pipex *data, char **envp)
 	}
 	data->paths = ft_split(data->path, ':');
 	if (!data->paths)
-		return (NULL);
+		exit(1);
+	// ft_free_all(data->paths);
 	free(data->path);
-	return (ft_access(data));
+	ft_access(data);
 }
