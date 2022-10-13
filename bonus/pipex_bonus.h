@@ -6,7 +6,7 @@
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 20:18:56 by aradice           #+#    #+#             */
-/*   Updated: 2022/10/12 01:20:49 by aradice          ###   ########.fr       */
+/*   Updated: 2022/10/12 20:27:27 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ void	ft_mode(t_pipex *data, int argc, char **argv);
 void	ft_here_doc(t_pipex *data);
 void	ft_free_paths(t_pipex *data);
 void	ft_exec_init(t_pipex *data, char **argv, char **envp);
+void	ft_message(char *error);
 
 #endif

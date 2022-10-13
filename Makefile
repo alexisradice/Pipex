@@ -20,7 +20,7 @@ SRCS_BONUS = $(addprefix $(SRCS_PATH_BONUS), $(SRCS_FILES_BONUS))
 CC = gcc
 RM = rm -f
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g3
 
 INCL = -I./includes -I./libft/includes
 LIBFT_PATH = libft/

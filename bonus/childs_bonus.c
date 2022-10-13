@@ -6,7 +6,7 @@
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 03:17:12 by aradice           #+#    #+#             */
-/*   Updated: 2022/10/12 01:22:45 by aradice          ###   ########.fr       */
+/*   Updated: 2022/10/12 20:34:10 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ void	ft_childs(t_pipex *data, char **argv, char **envp)
 		ft_error("Fork Error");
 	if (data->pid == 0)
 	{
+		if (data->infile == -1 && data->index_child == 0)
+			exit(1);
+		if (data->outfile == -1 && data->index_child == data->commands - 1)
+			exit(1);
 		close(data->pipefd[0]);
 		if (data->index_child == data->commands - 1)
 			dup2(data->outfile, STDOUT_FILENO);
@@ -48,6 +52,18 @@ void	ft_exec_init(t_pipex *data, char **argv, char **envp)
 	{
 		ft_free_all(data->command);
 		free(data->correct_path);
-		exit(1);
+		ft_message("Error: Command not found\n");
 	}
+}
+
+void	ft_error(char *error)
+{
+	perror(error);
+	exit (1);
+}
+
+void	ft_message(char *error)
+{
+	ft_putstr_fd(error, 2);
+	exit(1);
 }

@@ -6,7 +6,7 @@
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 01:29:02 by aradice           #+#    #+#             */
-/*   Updated: 2022/10/11 22:22:40 by aradice          ###   ########.fr       */
+/*   Updated: 2022/10/13 02:05:17 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_here_doc(t_pipex *data)
 	char	*line;
 	int		temp;
 
-	temp = open("temp.tmp", O_WRONLY | O_APPEND | O_CREAT, 0777);
+	temp = open("temp.tmp", O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (temp == -1)
 		ft_error("File Error");
 	line = get_next_line(STDIN_FILENO);

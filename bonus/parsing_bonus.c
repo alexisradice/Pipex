@@ -6,7 +6,7 @@
 /*   By: aradice <aradice@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 03:16:39 by aradice           #+#    #+#             */
-/*   Updated: 2022/10/12 01:14:59 by aradice          ###   ########.fr       */
+/*   Updated: 2022/10/12 19:29:25 by aradice          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*ft_access(t_pipex *data)
 
 	i = 0;
 	command = data->command[0];
+	if (access(command, F_OK | X_OK) == 0)
+		return (command);
 	while (data->paths[i])
 	{
 		temp = ft_strjoin(data->paths[i], "/");

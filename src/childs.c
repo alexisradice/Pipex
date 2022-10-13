@@ -12,6 +12,19 @@
 
 #include "pipex.h"
 
+void	ft_exec_init(t_pipex *data, char **envp)
+{
+	if (data->command == NULL)
+		exit(1);
+	data->correct_path = ft_path(data, envp);
+	if (data->correct_path == NULL)
+	{
+		ft_free_all(data->command);
+		free(data->correct_path);
+		ft_message("Error: Command not found\n");
+	}
+}
+
 void	ft_child1(t_pipex *data, char **argv, char **envp)
 {
 	data->pid1 = fork();
@@ -19,13 +32,15 @@ void	ft_child1(t_pipex *data, char **argv, char **envp)
 		ft_error("Fork Error");
 	else if (data->pid1 == 0)
 	{
+		if (data->infile == -1)
+			exit(1);
 		dup2(data->pipefd[1], STDOUT_FILENO);
 		dup2(data->infile, STDIN_FILENO);
 		close(data->pipefd[0]);
 		close(data->pipefd[1]);
 		data->command = ft_split(argv[2], ' ');
-		if (execve(ft_path(data, envp), data->command, envp) == -1)
-			ft_error("Path or Command Error");
+		ft_exec_init(data, envp);
+		execve(data->correct_path, data->command, envp);
 	}
 }
 
@@ -37,13 +52,16 @@ void	ft_child2(t_pipex *data, char **argv, char **envp)
 		ft_error("Fork Error\n");
 	else if (data->pid2 == 0)
 	{
+		if (data->outfile == -1)
+		{
+			ft_free_all(data->command);
+			exit(1);
+		}
 		dup2(data->pipefd[0], STDIN_FILENO);
 		dup2(data->outfile, STDOUT_FILENO);
 		close(data->pipefd[0]);
 		close(data->pipefd[1]);
-		if (data->command == NULL)
-		{
-			exit(1);
-		}
+		ft_exec_init(data, envp);
+		execve(ft_path(data, envp), data->command, envp);
 	}
 }

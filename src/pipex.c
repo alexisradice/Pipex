@@ -18,6 +18,12 @@ void	ft_error(char *error)
 	exit (1);
 }
 
+void	ft_message(char *error)
+{
+	ft_putstr_fd(error, 2);
+	exit(1);
+}
+
 char	**ft_free_all(char **tab)
 {
 	int	i;
@@ -35,13 +41,16 @@ char	**ft_free_all(char **tab)
 void	ft_open_files(t_pipex *data, char *infile, char *outfile)
 {
 	data->infile = open(infile, O_RDONLY);
-	data->outfile = open(outfile, O_RDWR | O_CREAT | O_TRUNC, 0777);
-	if (data->infile == -1 && data->outfile >= 0)
-		ft_error("Infile Error");
-	else if (data->outfile == -1 && data->infile >= 0)
-		ft_error("Outfile Error");
-	else if (data->outfile == -1 && data->infile < 0)
-		ft_error("Infile and Outfile Error");
+	data->outfile = open(outfile, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (data->outfile == -1 && data->infile == -1)
+	{
+		perror("Infile Error");
+		perror("Outfile Error");
+	}
+	else if (data->infile == -1)
+		perror("Infile Error");
+	else if (data->outfile == -1)
+		perror("Outfile Error");
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -49,7 +58,7 @@ int	main(int argc, char **argv, char **envp)
 	t_pipex	data;
 
 	if (argc != 5)
-		ft_error("Arguments Error");
+		ft_message("Error: Arguments");
 	else
 	{
 		if (pipe((&data)->pipefd) == -1)
@@ -60,8 +69,10 @@ int	main(int argc, char **argv, char **envp)
 		ft_free_all((&data)->command);
 		close((&data)->pipefd[0]);
 		close((&data)->pipefd[1]);
-		close((&data)->infile);
-		close((&data)->outfile);
+		if ((&data)->infile != -1)
+			close((&data)->infile);
+		if ((&data)->outfile != -1)
+			close((&data)->outfile);
 		waitpid((&data)->pid1, NULL, 0);
 		waitpid((&data)->pid2, NULL, 0);
 	}

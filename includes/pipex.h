@@ -30,6 +30,7 @@ typedef struct s_pipex
 	char	*path;
 	char	*command_path;
 	int		pipefd[2];
+	char	*correct_path;
 }				t_pipex;
 
 void	ft_error(char *error);
@@ -40,5 +41,8 @@ void	ft_child2(t_pipex *data, char **argv, char **envp);
 int		main(int argc, char **argv, char **envp);
 char	*ft_access(t_pipex *data);
 char	*ft_path(t_pipex *data, char **envp);
+void	ft_free_paths(t_pipex *data);
+void	ft_exec_init(t_pipex *data, char **envp);
+void	ft_message(char *error);
 
 #endif
