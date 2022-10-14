@@ -49,7 +49,7 @@ void	ft_child2(t_pipex *data, char **argv, char **envp)
 	data->command = ft_split(argv[3], ' ');
 	data->pid2 = fork();
 	if (data->pid2 == -1)
-		ft_error("Fork Error\n");
+		ft_error("Fork Error");
 	else if (data->pid2 == 0)
 	{
 		if (data->outfile == -1)

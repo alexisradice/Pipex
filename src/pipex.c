@@ -58,7 +58,7 @@ int	main(int argc, char **argv, char **envp)
 	t_pipex	data;
 
 	if (argc != 5)
-		ft_message("Error: Arguments");
+		ft_message("Error: Arguments\n");
 	else
 	{
 		if (pipe((&data)->pipefd) == -1)
